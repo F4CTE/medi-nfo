@@ -1,0 +1,159 @@
+databaseChangeLog:
+  - changeSet:
+      id: medi-nfo-initial
+      author: CSE
+      changes:
+        - createTable:
+            tableName: user
+            columns:
+            - column:
+                name: id
+                type: bigint
+                autoIncrement: true
+                startWith: 10000
+                constraints:
+                  primaryKey: true
+                  nullable: false
+            - column:
+                name: username
+                type: character varying(50)
+                constraints:
+                  nullable: false
+            - column:
+                name: password
+                type: character varying(255)
+            - column:
+                name: role
+                type: enum('ADMIN', 'USER')
+                constraints:
+                  nullable: false
+            - column:
+                name: status
+                type: enum('ACTIVE', 'DISABLED')
+                constraints:
+                  nullable: false
+            - column:
+                name: firstname
+                type: character varying(50)
+            - column:
+                name: lastname
+                type: character varying(255)
+            - column:
+                name: specialization
+                type: character varying(255)
+            - column:
+                name: date_created
+                type: timestamp
+                constraints:
+                  nullable: false
+            - column:
+                name: last_updated
+                type: timestamp
+                constraints:
+                  nullable: false
+        - createTable:
+            tableName: patient
+            columns:
+            - column:
+                name: id
+                type: bigint
+                autoIncrement: true
+                startWith: 10000
+                constraints:
+                  primaryKey: true
+                  nullable: false
+            - column:
+                name: ssn
+                type: character varying(50)
+                constraints:
+                  nullable: false
+            - column:
+                name: first_name
+                type: character varying(255)
+                constraints:
+                  nullable: false
+            - column:
+                name: last_name
+                type: character varying(255)
+                constraints:
+                  nullable: false
+            - column:
+                name: dob
+                type: date
+                constraints:
+                  nullable: false
+            - column:
+                name: gender
+                type: enum('MALE', 'FEMALE', 'OTHER')
+                constraints:
+                  nullable: false
+            - column:
+                name: date_created
+                type: timestamp
+                constraints:
+                  nullable: false
+            - column:
+                name: last_updated
+                type: timestamp
+                constraints:
+                  nullable: false
+        - createTable:
+            tableName: address
+            columns:
+            - column:
+                name: id
+                type: bigint
+                autoIncrement: true
+                startWith: 10000
+                constraints:
+                  primaryKey: true
+                  nullable: false
+            - column:
+                name: street
+                type: character varying(200)
+                constraints:
+                  nullable: false
+            - column:
+                name: zipcode
+                type: character varying(50)
+                constraints:
+                  nullable: false
+            - column:
+                name: country
+                type: character varying(255)
+                constraints:
+                  nullable: false
+            - column:
+                name: city
+                type: character varying(100)
+            - column:
+                name: user_id
+                type: bigint
+                constraints:
+                  nullable: false
+            - column:
+                name: date_created
+                type: timestamp
+                constraints:
+                  nullable: false
+            - column:
+                name: last_updated
+                type: timestamp
+                constraints:
+                  nullable: false
+        - addUniqueConstraint:
+            constraintName: unique_user_username
+            tableName: user
+            columnNames: username
+        - addUniqueConstraint:
+            constraintName: unique_patient_ssn
+            tableName: patient
+            columnNames: ssn
+        - addForeignKeyConstraint:
+            constraintName: fk_address_user_id
+            baseTableName: address
+            baseColumnNames: user_id
+            referencedTableName: user
+            referencedColumnNames: id
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
