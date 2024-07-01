@@ -1,7 +1,7 @@
 package com.b3al.med.medi_nfo.address;
 
-import com.b3al.med.medi_nfo.user.User;
-import com.b3al.med.medi_nfo.user.UserRepository;
+import com.b3al.med.medi_nfo.patient.Patient;
+import com.b3al.med.medi_nfo.patient.PatientRepository;
 import com.b3al.med.medi_nfo.util.NotFoundException;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Context;
@@ -29,12 +29,12 @@ public interface AddressMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "user", ignore = true)
     Address updateAddress(AddressDTO addressDTO, @MappingTarget Address address,
-            @Context UserRepository userRepository);
+            @Context PatientRepository patientRepository);
 
     @AfterMapping
     default void afterUpdateAddress(AddressDTO addressDTO, @MappingTarget Address address,
-            @Context UserRepository userRepository) {
-        final User user = addressDTO.getUser() == null ? null : userRepository.findById(addressDTO.getUser())
+            @Context PatientRepository patientRepository) {
+        final Patient user = addressDTO.getUser() == null ? null : patientRepository.findById(addressDTO.getUser())
                 .orElseThrow(() -> new NotFoundException("user not found"));
         address.setUser(user);
     }

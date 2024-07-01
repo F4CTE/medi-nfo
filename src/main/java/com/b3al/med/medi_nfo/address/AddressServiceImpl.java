@@ -1,6 +1,6 @@
 package com.b3al.med.medi_nfo.address;
 
-import com.b3al.med.medi_nfo.user.UserRepository;
+import com.b3al.med.medi_nfo.patient.PatientRepository;
 import com.b3al.med.medi_nfo.util.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -12,13 +12,13 @@ import org.springframework.stereotype.Service;
 public class AddressServiceImpl implements AddressService {
 
     private final AddressRepository addressRepository;
-    private final UserRepository userRepository;
+    private final PatientRepository patientRepository;
     private final AddressMapper addressMapper;
 
     public AddressServiceImpl(final AddressRepository addressRepository,
-            final UserRepository userRepository, final AddressMapper addressMapper) {
+            final PatientRepository patientRepository, final AddressMapper addressMapper) {
         this.addressRepository = addressRepository;
-        this.userRepository = userRepository;
+        this.patientRepository = patientRepository;
         this.addressMapper = addressMapper;
     }
 
@@ -53,7 +53,7 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public Long create(final AddressDTO addressDTO) {
         final Address address = new Address();
-        addressMapper.updateAddress(addressDTO, address, userRepository);
+        addressMapper.updateAddress(addressDTO, address, patientRepository);
         return addressRepository.save(address).getId();
     }
 
@@ -61,7 +61,7 @@ public class AddressServiceImpl implements AddressService {
     public void update(final Long id, final AddressDTO addressDTO) {
         final Address address = addressRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
-        addressMapper.updateAddress(addressDTO, address, userRepository);
+        addressMapper.updateAddress(addressDTO, address, patientRepository);
         addressRepository.save(address);
     }
 

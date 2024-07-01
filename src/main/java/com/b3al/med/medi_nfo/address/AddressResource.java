@@ -1,7 +1,7 @@
 package com.b3al.med.medi_nfo.address;
 
-import com.b3al.med.medi_nfo.user.User;
-import com.b3al.med.medi_nfo.user.UserRepository;
+import com.b3al.med.medi_nfo.patient.Patient;
+import com.b3al.med.medi_nfo.patient.PatientRepository;
 import com.b3al.med.medi_nfo.user.UserRole;
 import com.b3al.med.medi_nfo.util.CustomCollectors;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,12 +39,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AddressResource {
 
     private final AddressService addressService;
-    private final UserRepository userRepository;
+    private final PatientRepository patientRepository;
 
     public AddressResource(final AddressService addressService,
-            final UserRepository userRepository) {
+            final PatientRepository patientRepository) {
         this.addressService = addressService;
-        this.userRepository = userRepository;
+        this.patientRepository = patientRepository;
     }
 
     @Operation(
@@ -101,9 +101,9 @@ public class AddressResource {
 
     @GetMapping("/userValues")
     public ResponseEntity<Map<Long, String>> getUserValues() {
-        return ResponseEntity.ok(userRepository.findAll(Sort.by("id"))
+        return ResponseEntity.ok(patientRepository.findAll(Sort.by("id"))
                 .stream()
-                .collect(CustomCollectors.toSortedMap(User::getId, User::getUsername)));
+                .collect(CustomCollectors.toSortedMap(Patient::getId, Patient::getSsn)));
     }
 
 }

@@ -1,6 +1,9 @@
 package com.b3al.med.medi_nfo.patient;
 
+import com.b3al.med.medi_nfo.address.Address;
+import com.b3al.med.medi_nfo.address.AddressRepository;
 import com.b3al.med.medi_nfo.util.NotFoundException;
+import com.b3al.med.medi_nfo.util.ReferencedWarning;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -12,11 +15,13 @@ public class PatientServiceImpl implements PatientService {
 
     private final PatientRepository patientRepository;
     private final PatientMapper patientMapper;
+    private final AddressRepository addressRepository;
 
     public PatientServiceImpl(final PatientRepository patientRepository,
-            final PatientMapper patientMapper) {
+            final PatientMapper patientMapper, final AddressRepository addressRepository) {
         this.patientRepository = patientRepository;
         this.patientMapper = patientMapper;
+        this.addressRepository = addressRepository;
     }
 
     @Override
@@ -70,6 +75,20 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public boolean ssnExists(final String ssn) {
         return patientRepository.existsBySsnIgnoreCase(ssn);
+    }
+
+    @Override
+    public ReferencedWarning getReferencedWarning(final Long id) {
+        final ReferencedWarning referencedWarning = new ReferencedWarning();
+        final Patient patient = patientRepository.findById(id)
+                .orElseThrow(NotFoundException::new);
+        final Address userAddress = addressRepository.findFirstByUser(patient);
+        if (userAddress != null) {
+            referencedWarning.setKey("patient.address.user.referenced");
+            referencedWarning.addParam(userAddress.getId());
+            return referencedWarning;
+        }
+        return null;
     }
 
 }

@@ -1,7 +1,5 @@
 package com.b3al.med.medi_nfo.user;
 
-import com.b3al.med.medi_nfo.util.ReferencedException;
-import com.b3al.med.medi_nfo.util.ReferencedWarning;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -88,10 +86,6 @@ public class UserResource {
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
     public ResponseEntity<Void> deleteUser(@PathVariable(name = "id") final Long id) {
-        final ReferencedWarning referencedWarning = userService.getReferencedWarning(id);
-        if (referencedWarning != null) {
-            throw new ReferencedException(referencedWarning);
-        }
         userService.delete(id);
         return ResponseEntity.noContent().build();
     }

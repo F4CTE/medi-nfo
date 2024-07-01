@@ -1,5 +1,5 @@
-DELETE FROM patient;
+DELETE FROM user;
 
 DELETE FROM address;
 
-DELETE FROM user;
+DELETE FROM patient;

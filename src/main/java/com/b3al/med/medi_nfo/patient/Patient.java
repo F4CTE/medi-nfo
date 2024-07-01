@@ -1,5 +1,6 @@
 package com.b3al.med.medi_nfo.patient;
 
+import com.b3al.med.medi_nfo.address.Address;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -8,8 +9,10 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -43,6 +46,9 @@ public class Patient {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Address> addresses;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

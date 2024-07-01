@@ -46,13 +46,13 @@ public abstract class BaseIT {
     public int serverPort;
 
     @Autowired
-    public PatientRepository patientRepository;
+    public UserRepository userRepository;
 
     @Autowired
     public AddressRepository addressRepository;
 
     @Autowired
-    public UserRepository userRepository;
+    public PatientRepository patientRepository;
 
     @PostConstruct
     public void initRestAssured() {
