@@ -34,9 +34,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   getMessage(key: string, details?: any) {
     const messages: Record<string, string> = {
       confirm: $localize`:@@delete.confirm:Do you really want to delete this element? This cannot be undone.`,
-      deleted: $localize`:@@user.delete.success:User was removed successfully.`,
-      'user.address.user.referenced': $localize`:@@user.address.user.referenced:This entity is still referenced by Address ${details?.id} via field User.`
-    };
+      deleted: $localize`:@@user.delete.success:User was removed successfully.`    };
     return messages[key];
   }
 
@@ -70,18 +68,7 @@ export class UserListComponent implements OnInit, OnDestroy {
                 msgInfo: this.getMessage('deleted')
               }
             }),
-            error: (error) => {
-              if (error.error?.code === 'REFERENCED') {
-                const messageParts = error.error.message.split(',');
-                this.router.navigate(['/users'], {
-                  state: {
-                    msgError: this.getMessage(messageParts[0], { id: messageParts[1] })
-                  }
-                });
-                return;
-              }
-              this.errorHandler.handleServerError(error.error)
-            }
+            error: (error) => this.errorHandler.handleServerError(error.error)
           });
     }
   }

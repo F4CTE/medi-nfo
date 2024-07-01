@@ -1,6 +1,6 @@
 package com.b3al.med.medi_nfo.user;
 
-import com.b3al.med.medi_nfo.util.ReferencedWarning;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -18,7 +18,5 @@ public interface UserService {
     void delete(Long id);
 
     boolean usernameExists(String username);
-
-    ReferencedWarning getReferencedWarning(Long id);
 
 }

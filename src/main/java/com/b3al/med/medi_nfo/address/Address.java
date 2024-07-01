@@ -1,6 +1,6 @@
 package com.b3al.med.medi_nfo.address;
 
-import com.b3al.med.medi_nfo.user.User;
+import com.b3al.med.medi_nfo.patient.Patient;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -43,7 +43,8 @@ public class Address {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private Patient user;
+
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

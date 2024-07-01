@@ -1,5 +1,6 @@
 package com.b3al.med.medi_nfo.patient;
 
+import com.b3al.med.medi_nfo.util.ReferencedWarning;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -17,5 +18,7 @@ public interface PatientService {
     void delete(Long id);
 
     boolean ssnExists(String ssn);
+
+    ReferencedWarning getReferencedWarning(Long id);
 
 }

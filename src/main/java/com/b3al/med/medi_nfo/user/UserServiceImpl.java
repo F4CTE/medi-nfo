@@ -1,9 +1,6 @@
 package com.b3al.med.medi_nfo.user;
 
-import com.b3al.med.medi_nfo.address.Address;
-import com.b3al.med.medi_nfo.address.AddressRepository;
 import com.b3al.med.medi_nfo.util.NotFoundException;
-import com.b3al.med.medi_nfo.util.ReferencedWarning;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -17,15 +14,13 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
-    private final AddressRepository addressRepository;
 
     public UserServiceImpl(final UserRepository userRepository,
-            final PasswordEncoder passwordEncoder, final UserMapper userMapper,
-            final AddressRepository addressRepository) {
+            final PasswordEncoder passwordEncoder, final UserMapper userMapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userMapper = userMapper;
-        this.addressRepository = addressRepository;
+
     }
 
     @Override
@@ -79,20 +74,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean usernameExists(final String username) {
         return userRepository.existsByUsernameIgnoreCase(username);
-    }
-
-    @Override
-    public ReferencedWarning getReferencedWarning(final Long id) {
-        final ReferencedWarning referencedWarning = new ReferencedWarning();
-        final User user = userRepository.findById(id)
-                .orElseThrow(NotFoundException::new);
-        final Address userAddress = addressRepository.findFirstByUser(user);
-        if (userAddress != null) {
-            referencedWarning.setKey("user.address.user.referenced");
-            referencedWarning.addParam(userAddress.getId());
-            return referencedWarning;
-        }
-        return null;
     }
 
 }
