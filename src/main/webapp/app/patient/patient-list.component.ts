@@ -82,6 +82,7 @@ export class PatientListComponent implements OnInit, OnDestroy {
               }
               this.errorHandler.handleServerError(error.error)
             }
+
           });
     }
   }

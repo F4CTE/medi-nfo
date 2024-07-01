@@ -45,6 +45,7 @@ public class Address {
     @JoinColumn(name = "user_id", nullable = false)
     private Patient user;
 
+
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private OffsetDateTime dateCreated;

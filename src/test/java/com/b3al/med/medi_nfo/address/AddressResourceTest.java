@@ -31,6 +31,7 @@ public class AddressResourceTest extends BaseIT {
 
     @Test
     @Sql({"/data/patientData.sql", "/data/addressData.sql"})
+
     void getAllAddresses_filtered() {
         RestAssured
                 .given()
@@ -73,6 +74,7 @@ public class AddressResourceTest extends BaseIT {
 
     @Test
     @Sql("/data/patientData.sql")
+
     void createAddress_success() {
         RestAssured
                 .given()
@@ -106,6 +108,7 @@ public class AddressResourceTest extends BaseIT {
 
     @Test
     @Sql({"/data/patientData.sql", "/data/addressData.sql"})
+
     void updateAddress_success() {
         RestAssured
                 .given()
@@ -123,6 +126,7 @@ public class AddressResourceTest extends BaseIT {
 
     @Test
     @Sql({"/data/patientData.sql", "/data/addressData.sql"})
+
     void deleteAddress_success() {
         RestAssured
                 .given()
