@@ -1,0 +1,14 @@
+<div class="d-flex flex-wrap mb-4">
+    <h1 class="flex-grow-1" i18n="@@address.add.headline">Add Address</h1>
+    <div>
+        <a routerLink="/addresses" class="btn btn-secondary" i18n="@@address.add.back">Back to list</a>
+    </div>
+</div>
+<form [formGroup]="addForm" (ngSubmit)="handleSubmit()">
+    <app-input-row [group]="addForm" field="street" i18n-label="@@address.street.label" label="Street" />
+    <app-input-row [group]="addForm" field="zipcode" i18n-label="@@address.zipcode.label" label="Zipcode" />
+    <app-input-row [group]="addForm" field="country" i18n-label="@@address.country.label" label="Country" />
+    <app-input-row [group]="addForm" field="city" i18n-label="@@address.city.label" label="City" />
+    <app-input-row [group]="addForm" field="user" rowType="select" [options]="userValues" i18n-label="@@address.user.label" label="User" />
+    <input type="submit" i18n-value="@@address.add.headline" value="Add Address" class="btn btn-primary mt-4" />
+</form>
