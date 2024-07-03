@@ -21,7 +21,7 @@ export const routes: Routes = [
     component: HomeComponent,
     title: $localize`:@@home.index.headline:Welcome to your new app!`,
     data: {
-      roles: [ADMIN]
+      roles: [ADMIN, USER]
     }
   },
   {
