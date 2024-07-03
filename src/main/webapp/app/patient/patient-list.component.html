@@ -1,7 +1,9 @@
 <div class="d-flex flex-wrap mb-4">
     <h1 class="flex-grow-1" i18n="@@patient.list.headline">Patients</h1>
     <div>
+        @if (authenticationService.isLoggedIn() && authenticationService.hasAnyRole(['ADMIN'])) {
         <a routerLink="/patients/add" class="btn btn-primary ms-2" i18n="@@patient.list.createNew">Create new Patient</a>
+        }
     </div>
 </div>
 @if ((patients && patients.page.totalElements !== 0) || route.snapshot.queryParamMap.get('filter')) {
@@ -14,7 +16,7 @@
 <div i18n="@@patient.list.empty">No Patients could be found.</div>
 } @else {
 <div class="table-responsive">
-    <table class="table table-striped table-hover align-middle">
+<table class="table table-striped table-hover align-middle">
         <thead>
             <tr>
                 <th scope="col" i18n="@@patient.id.label">Id</th>
@@ -37,8 +39,10 @@
                 <td>{{ patient.gender }}</td>
                 <td>
                     <div class="float-end text-nowrap">
+                        @if (authenticationService.isLoggedIn() && authenticationService.hasAnyRole(['ADMIN'])) {
                         <a [routerLink]="['/patients/edit', patient.id]" class="btn btn-sm btn-secondary" i18n="@@patient.list.edit">Edit</a>
                         <button type="button" (click)="confirmDelete(patient.id!)" class="btn btn-sm btn-secondary" i18n="@@patient.list.delete">Delete</button>
+                        }
                     </div>
                 </td>
             </tr>

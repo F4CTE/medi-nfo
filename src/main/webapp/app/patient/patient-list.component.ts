@@ -9,6 +9,7 @@ import { SearchFilterComponent } from 'app/common/list-helper/search-filter.comp
 import { SortingComponent } from 'app/common/list-helper/sorting.component';
 import { getListParams } from 'app/common/utils';
 import { PagedModel, PaginationComponent } from 'app/common/list-helper/pagination.component';
+import { AuthenticationService} from "../security/authentication.service";
 
 
 @Component({
@@ -26,8 +27,8 @@ export class PatientListComponent implements OnInit, OnDestroy {
   navigationSubscription?: Subscription;
 
   sortOptions = {
-    'id,ASC': $localize`:@@patient.list.sort.id,ASC:Sort by Id (Ascending)`, 
-    'ssn,ASC': $localize`:@@patient.list.sort.ssn,ASC:Sort by Ssn (Ascending)`, 
+    'id,ASC': $localize`:@@patient.list.sort.id,ASC:Sort by Id (Ascending)`,
+    'ssn,ASC': $localize`:@@patient.list.sort.ssn,ASC:Sort by Ssn (Ascending)`,
     'firstName,ASC': $localize`:@@patient.list.sort.firstName,ASC:Sort by First Name (Ascending)`
   }
 
@@ -52,7 +53,7 @@ export class PatientListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.navigationSubscription!.unsubscribe();
   }
-  
+
   loadData() {
     this.patientService.getAllPatients(getListParams(this.route))
         .subscribe({
@@ -60,6 +61,7 @@ export class PatientListComponent implements OnInit, OnDestroy {
           error: (error) => this.errorHandler.handleServerError(error.error)
         });
   }
+  authenticationService = inject(AuthenticationService);
 
   confirmDelete(id: number) {
     if (confirm(this.getMessage('confirm'))) {
