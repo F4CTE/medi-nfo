@@ -39,3 +39,13 @@ springdoc:
   pathsToMatch: /api/**, /authenticate
 jwt:
   secret: 5CB14489E0785D58A9100638F5A76AEC
+
+medical:
+  server:
+    url: ${MEDICAL_SERVER_URL:http://localhost:8082}
+    auth: ${MEDICAL_SERVER_AUTH:/authenticate}
+    patientEndpoint: ${MEDICAL_SERVER_PATIENT:/api/patients}
+  user:
+    username: ${MEDICAL_USER_USERNAME:medi-nfo}
+    password: ${MEDICAL_USER_PASSWORD:medi-nfo}
+  envtype: ${SPRING_PROFILES_ACTIVE:local}

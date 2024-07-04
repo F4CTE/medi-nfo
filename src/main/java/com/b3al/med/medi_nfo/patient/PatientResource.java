@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
+@Slf4j
 @RequestMapping(value = "/api/patients", produces = MediaType.APPLICATION_JSON_VALUE)
 @SecurityRequirement(name = "bearer-jwt")
 public class PatientResource {
@@ -77,8 +79,14 @@ public class PatientResource {
     @PreAuthorize("hasAuthority('" + UserRole.Fields.ADMIN + "')")
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Long> createPatient(@RequestBody @Valid final PatientDTO patientDTO) {
-        final Long createdId = patientService.create(patientDTO);
-        return new ResponseEntity<>(createdId, HttpStatus.CREATED);
+        Long createdId;
+        try {
+            createdId = patientService.create(patientDTO);
+            log.info(createdId.toString(), patientDTO);
+            return new ResponseEntity<>(createdId, HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(0L, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping("/{id}")

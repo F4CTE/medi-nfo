@@ -13,6 +13,8 @@ public interface PatientService {
 
     Long create(PatientDTO patientDTO);
 
+    Boolean addToMedical(PatientDTO patientDTO);
+
     void update(Long id, PatientDTO patientDTO);
 
     void delete(Long id);

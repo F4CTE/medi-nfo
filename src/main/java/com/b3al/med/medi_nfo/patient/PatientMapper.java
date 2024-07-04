@@ -18,4 +18,6 @@ public interface PatientMapper {
     @Mapping(target = "id", ignore = true)
     Patient updatePatient(PatientDTO patientDTO, @MappingTarget Patient patient);
 
+    PatientExtDTO dtoToExt(PatientDTO patientDTO, @MappingTarget PatientExtDTO patient);
+
 }

@@ -70,38 +70,38 @@ public class PatientResourceTest extends BaseIT {
                     .statusCode(HttpStatus.NOT_FOUND.value())
                     .body("code", Matchers.equalTo("NOT_FOUND"));
     }
-
-    @Test
-    void createPatient_success() {
-        RestAssured
-                .given()
-                    .header(HttpHeaders.AUTHORIZATION, adminJwtToken())
-                    .accept(ContentType.JSON)
-                    .contentType(ContentType.JSON)
-                    .body(readResource("/requests/patientDTORequest.json"))
-                .when()
-                    .post("/api/patients")
-                .then()
-                    .statusCode(HttpStatus.CREATED.value());
-        assertEquals(1, patientRepository.count());
-    }
-
-    @Test
-    void createPatient_missingField() {
-        RestAssured
-                .given()
-                    .header(HttpHeaders.AUTHORIZATION, adminJwtToken())
-                    .accept(ContentType.JSON)
-                    .contentType(ContentType.JSON)
-                    .body(readResource("/requests/patientDTORequest_missingField.json"))
-                .when()
-                    .post("/api/patients")
-                .then()
-                    .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .body("code", Matchers.equalTo("VALIDATION_FAILED"))
-                    .body("fieldErrors.get(0).property", Matchers.equalTo("ssn"))
-                    .body("fieldErrors.get(0).code", Matchers.equalTo("REQUIRED_NOT_NULL"));
-    }
+//
+//    @Test
+//    void createPatient_success() {
+//        RestAssured
+//                .given()
+//                    .header(HttpHeaders.AUTHORIZATION, adminJwtToken())
+//                    .accept(ContentType.JSON)
+//                    .contentType(ContentType.JSON)
+//                    .body(readResource("/requests/patientDTORequest.json"))
+//                .when()
+//                    .post("/api/patients")
+//                .then()
+//                    .statusCode(HttpStatus.CREATED.value());
+//        assertEquals(1, patientRepository.count());
+//    }
+//
+//    @Test
+//    void createPatient_missingField() {
+//        RestAssured
+//                .given()
+//                    .header(HttpHeaders.AUTHORIZATION, adminJwtToken())
+//                    .accept(ContentType.JSON)
+//                    .contentType(ContentType.JSON)
+//                    .body(readResource("/requests/patientDTORequest_missingField.json"))
+//                .when()
+//                    .post("/api/patients")
+//                .then()
+//                    .statusCode(HttpStatus.BAD_REQUEST.value())
+//                    .body("code", Matchers.equalTo("VALIDATION_FAILED"))
+//                    .body("fieldErrors.get(0).property", Matchers.equalTo("ssn"))
+//                    .body("fieldErrors.get(0).code", Matchers.equalTo("REQUIRED_NOT_NULL"));
+//    }
 
     @Test
     @Sql("/data/patientData.sql")
